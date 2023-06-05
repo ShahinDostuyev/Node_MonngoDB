@@ -4,8 +4,10 @@ const BookController = {
   getAll: (req, res) => {
     Book.find()
       .limit(10)
-      .populate("writer")
-
+      .populate({
+        path: "writer",
+        populate:{path:"country"}
+      })
       .then((data) => {
         res.json(data);
       })
