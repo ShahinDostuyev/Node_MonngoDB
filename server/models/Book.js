@@ -6,9 +6,10 @@ const bookSchema = new mongoose.Schema({
   publishDate: { type: Date, default: Date.now },
   writer: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Writer"  },
+    ref: "Writer",
+  },
   addDate: { type: Date, default: Date.now },
-  // imagePath: String
+  // imagePath: String,
 });
 
 const Book = mongoose.model("Book", bookSchema);

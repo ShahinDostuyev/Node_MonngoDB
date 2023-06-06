@@ -1,13 +1,6 @@
 const { Book } = require("../models/Book");
-const { v4: uuidv4 } = require('uuid')
-var fs = require('fs');
-const express = require('express');
-const fileUpload = require('express-fileupload');
-
-
-const app = express();
-
-app.use(fileUpload());
+const { v4: uuidv4 } = require("uuid");
+var fs = require("fs");
 
 const BookController = {
   getAll: (req, res) => {
@@ -15,7 +8,7 @@ const BookController = {
       .limit(10)
       .populate({
         path: "writer",
-        populate:{path:"country"}
+        populate: { path: "country" },
       })
       .then((data) => {
         res.json(data);
@@ -40,21 +33,19 @@ const BookController = {
       });
   },
   add: (req, res) => {
-    // console.log("Files from request: ",req);
+    // console.log("Files from request: ", req.files);
     // const file = req.files.photo;
 
     // const extension = file.name.substring(file.name.lastIndexOf("."));
     // const path = __dirname + "../photos" + uuidv4() + extension;
 
-  //   file.mv(path, function(err){
-
-  //     if(!err){
-  //         res.send('Success!!')
-  //     }
-  //     else{
-  //         res.status(500).json(err)
-  //     }
-  // })
+    // file.mv(path, function (err) {
+    //   if (!err) {
+    //     res.send("Success!!");
+    //   } else {
+    //     res.status(500).json(err);
+    //   }
+    // });
     const book = new Book({
       name: req.body.name,
       description: req.body.description,
@@ -70,6 +61,14 @@ const BookController = {
     const id = req.params.id;
     Book.findByIdAndDelete(id)
       .then((data) => {
+        // fs.unlink(data.imagePath, function (err) {
+        //   if (!err) {
+        //     console.log("Book data is updated successfully!");
+        //   } else {
+        //     console.log("Error occured:", err);
+        //   }
+        // });
+
         res.json(data);
       })
       .catch((err) => {
